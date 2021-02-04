@@ -73,4 +73,5 @@ export const Permissions = {
   Vo2Max: 'Vo2Max',
   Weight: 'Weight',
   Workout: 'Workout',
-}
+  ElectroCardiogram: 'ElectroCardiogram',
+};

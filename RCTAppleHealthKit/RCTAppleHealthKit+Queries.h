@@ -5,6 +5,7 @@
 //  This source code is licensed under the MIT-style license found in the
 //  LICENSE file in the root directory of this source tree.
 //
+#import <HealthKit/HealthKit.h>
 
 #import "RCTAppleHealthKit.h"
 
@@ -76,6 +77,8 @@
                        ascending:(BOOL)ascending
                            limit:(NSUInteger)limit
                       completion:(void (^)(NSArray *, NSError *))completion;
+
+- (void)fetchECGSampleVoltage:(HKElectrocardiogram *)ecgSample completion:(void (^)(NSArray *, NSError *))completion;
 
 - (void)setObserverForType:(HKSampleType *)quantityType
                       type:(NSString *)type __deprecated;

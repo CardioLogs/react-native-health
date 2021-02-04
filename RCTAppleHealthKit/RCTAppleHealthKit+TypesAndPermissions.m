@@ -112,6 +112,11 @@
     if ([@"BloodAlcoholContent" isEqualToString: key]) {
         return [HKObjectType quantityTypeForIdentifier:HKQuantityTypeIdentifierBloodAlcoholContent];
     }
+    
+    // ECG
+    if ([@"ElectroCardiogram" isEqualToString: key]) {
+        return [HKObjectType electrocardiogramType];
+    }
 
     return nil;
 }

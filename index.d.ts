@@ -276,6 +276,11 @@ declare module 'react-native-health' {
       callback: (err: string, results: HealthValue) => void,
     ): void
 
+    getECGSamples(
+      options: HealthInputOptions,
+      callback: (err: string, results: EcgValue[]) => void,
+    ): void
+
     setObserver(options: HealthObserverOptions): void
 
     Constants: Constants
@@ -292,6 +297,14 @@ declare module 'react-native-health' {
     value: number
     startDate: string
     endDate: string
+  }
+
+  export interface EcgValue {
+    uuid: string
+    startDate: string
+    averageHr: number
+    classification: string
+    voltage: string[]
   }
 
   export interface HealthUnitOptions {
@@ -466,6 +479,7 @@ declare module 'react-native-health' {
     Vo2Max = 'Vo2Max',
     Weight = 'Weight',
     Workout = 'Workout',
+    ElectroCardiogram = 'ElectroCardiogram',
   }
 
   export enum HealthUnit {
@@ -491,7 +505,7 @@ declare module 'react-native-health' {
     pound = 'pound',
     second = 'second',
   }
-  
+
   export enum HealthStatusCode {
     NotDetermined = 0,
     SharingDenied = 1,
@@ -513,6 +527,7 @@ declare module 'react-native-health' {
     StairClimbing = 'StairClimbing',
     Walking = 'Walking',
     Workout = 'Workout',
+    ElectroCardiogram = 'ElectroCardiogram',
   }
 
   const appleHealthKit: AppleHealthKit

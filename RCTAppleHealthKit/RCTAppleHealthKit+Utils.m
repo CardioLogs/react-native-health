@@ -155,6 +155,8 @@
         return [HKObjectType quantityTypeForIdentifier:HKQuantityTypeIdentifierStepCount];
     } else if ([type isEqual:@"Workout"]) {
         return [HKObjectType workoutType];
+    } else if ([type isEqual:@"ElectroCardiogram"]) {
+        return [HKObjectType electrocardiogramType];
     }
 
     return [HKObjectType workoutType];
@@ -496,6 +498,24 @@
             return @"HandCycling";
         default:
             return @"Other";
+    }
+}
+
++ (NSString *)ecgClassificationToString:(HKElectrocardiogramClassification)sampleClassification
+{
+    switch (sampleClassification) {
+        case HKElectrocardiogramClassificationSinusRhythm:
+            return @"Sinus Rhythm";
+        case HKElectrocardiogramClassificationAtrialFibrillation:
+            return @"Atrial Fibrillation";
+        case HKElectrocardiogramClassificationInconclusiveLowHeartRate:
+            return @"Inconclusive Low HR";
+        case HKElectrocardiogramClassificationInconclusiveHighHeartRate:
+            return @"Inconclusive High HR";
+        case HKElectrocardiogramClassificationInconclusiveOther:
+            return @"Inconclusive Other";
+        default:
+            return @"[Default] Unrecognized";
     }
 }
 

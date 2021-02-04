@@ -174,6 +174,43 @@
 
                         [data addObject:elem];
                     }
+                } else if (type == [HKObjectType electrocardiogramType]) {
+                    for (HKElectrocardiogram *sample in results) {
+                        HKQuantity *avgHRQty = sample.averageHeartRate;
+                        double avgHrValue = [avgHRQty doubleValueForUnit:unit];
+                        NSString *startDateString = [RCTAppleHealthKit buildISO8601StringFromDate:sample.startDate];
+                        NSString *classification = [RCTAppleHealthKit ecgClassificationToString:sample.classification];
+                        
+                        // FIXME: maybe using sync blocks here is not a perfect way to fetch voltage data but didn't found better yet
+                        // http://commandshift.co.uk/blog/2014/03/19/using-dispatch-groups-to-wait-for-multiple-web-services/
+                        // Voltage fetch group async
+                        __block NSArray *voltageData = nil;
+                        
+                        // Dispatch group creation
+                        dispatch_group_t voltageGroup = dispatch_group_create();
+
+                        // Entering dispatch group
+                        dispatch_group_enter(voltageGroup);
+                        [self fetchECGSampleVoltage:sample completion:^(NSArray *voltage, NSError *voltErr) {
+                            voltageData = voltage;
+
+                            // Leave dispatch group
+                            dispatch_group_leave(voltageGroup);
+                        }];
+                        
+                        // Waiting for the voltage data to be fetched
+                        dispatch_group_wait(voltageGroup, DISPATCH_TIME_FOREVER);
+
+                        NSDictionary *elem = @{
+                            @"uuid" : [[sample UUID] UUIDString],
+                            @"startDate" : startDateString,
+                            @"averageHr" : @(avgHrValue),
+                            @"classification" : classification,
+                            @"voltage" : voltageData,
+                        };
+                        
+                        [data addObject:elem];
+                    }
                 } else {
                     for (HKQuantitySample *sample in results) {
                         HKQuantity *quantity = sample.quantity;
@@ -228,6 +265,36 @@
                                                       resultsHandler:handlerBlock];
 
     [self.healthStore executeQuery:query];
+}
+
+- (void)fetchECGSampleVoltage:(HKElectrocardiogram *)ecgSample completion:(void (^)(NSArray *, NSError *))completion
+{
+    // Where we store the data
+    NSMutableArray *voltageData = [NSMutableArray arrayWithCapacity:1];
+    
+    // Query handler block declaration
+    void (^handlerBlock)(HKElectrocardiogramQuery * _Nonnull query, HKElectrocardiogramVoltageMeasurement * _Nullable voltageMeasurement, BOOL done, NSError * _Nullable error);
+
+    // handler block assign and execution
+    handlerBlock = ^(HKElectrocardiogramQuery * _Nonnull query, HKElectrocardiogramVoltageMeasurement * _Nullable voltageMeasurement, BOOL done, NSError * _Nullable error)
+    {
+        // No more data to parse
+        if (done) {
+            completion(voltageData, error);
+        } else {
+            HKQuantity *currVoltageValue = [voltageMeasurement quantityForLead:HKElectrocardiogramLeadAppleWatchSimilarToLeadI];
+            HKUnit *voltUnit = [HKUnit voltUnit];
+            double value = [currVoltageValue doubleValueForUnit:voltUnit];
+
+            [voltageData addObject:@(value)];
+        }
+    };
+
+    HKElectrocardiogramQuery *voltageQuery = [[HKElectrocardiogramQuery alloc]
+                                              initWithElectrocardiogram:ecgSample
+                                              dataHandler:handlerBlock];
+
+    [self.healthStore executeQuery:voltageQuery];
 }
 
 - (void)fetchSleepCategorySamplesForPredicate:(NSPredicate *)predicate
