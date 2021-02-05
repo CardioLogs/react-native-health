@@ -192,7 +192,11 @@
                         // Entering dispatch group
                         dispatch_group_enter(voltageGroup);
                         [self fetchECGSampleVoltage:sample completion:^(NSArray *voltage, NSError *voltErr) {
-                            voltageData = voltage;
+                            if (!error) {
+                                voltageData = voltage;
+                            } else {
+                                NSLog(@"error reasing ecg voltage: %@", voltErr);
+                            }
 
                             // Leave dispatch group
                             dispatch_group_leave(voltageGroup);

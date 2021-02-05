@@ -505,17 +505,18 @@
 {
     switch (sampleClassification) {
         case HKElectrocardiogramClassificationSinusRhythm:
-            return @"Sinus Rhythm";
+            return @"SinusRhythm";
         case HKElectrocardiogramClassificationAtrialFibrillation:
-            return @"Atrial Fibrillation";
+            return @"AtrialFibrillation";
         case HKElectrocardiogramClassificationInconclusiveLowHeartRate:
-            return @"Inconclusive Low HR";
+            return @"InconclusiveLowHeartRate";
         case HKElectrocardiogramClassificationInconclusiveHighHeartRate:
-            return @"Inconclusive High HR";
+            return @"InconclusiveHighHeartRate";
         case HKElectrocardiogramClassificationInconclusiveOther:
-            return @"Inconclusive Other";
+            return @"InconclusiveOther";
+        case HKElectrocardiogramClassificationUnrecognized:
         default:
-            return @"[Default] Unrecognized";
+            return @"Unrecognized";
     }
 }
 
