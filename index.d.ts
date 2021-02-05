@@ -305,6 +305,7 @@ declare module 'react-native-health' {
     averageHr: number
     classification: string
     voltage: string[]
+    frequency: number
   }
 
   export interface HealthUnitOptions {
@@ -530,7 +531,7 @@ declare module 'react-native-health' {
     ElectroCardiogram = 'ElectroCardiogram',
   }
 
-  const appleHealthKit: AppleHealthKit
+  const appleHealthKit: AppleHealthKit;
 
-  export default appleHealthKit
+  export default appleHealthKit;
 }

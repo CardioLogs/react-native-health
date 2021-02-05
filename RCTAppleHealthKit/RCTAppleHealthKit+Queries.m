@@ -180,6 +180,8 @@
                         double avgHrValue = [avgHRQty doubleValueForUnit:unit];
                         NSString *startDateString = [RCTAppleHealthKit buildISO8601StringFromDate:sample.startDate];
                         NSString *classification = [RCTAppleHealthKit ecgClassificationToString:sample.classification];
+                        HKQuantity *frequency = sample.samplingFrequency;
+                        double frequencyValue = [frequency doubleValueForUnit:[HKUnit hertzUnit]];
                         
                         // FIXME: maybe using sync blocks here is not a perfect way to fetch voltage data but didn't found better yet
                         // http://commandshift.co.uk/blog/2014/03/19/using-dispatch-groups-to-wait-for-multiple-web-services/
@@ -211,6 +213,7 @@
                             @"averageHr" : @(avgHrValue),
                             @"classification" : classification,
                             @"voltage" : voltageData,
+                            @"frequency" : @(frequencyValue)
                         };
                         
                         [data addObject:elem];
@@ -287,7 +290,7 @@
             completion(voltageData, error);
         } else {
             HKQuantity *currVoltageValue = [voltageMeasurement quantityForLead:HKElectrocardiogramLeadAppleWatchSimilarToLeadI];
-            HKUnit *voltUnit = [HKUnit voltUnit];
+            HKUnit *voltUnit = [HKUnit voltUnitWithMetricPrefix:HKMetricPrefixMilli];
             double value = [currVoltageValue doubleValueForUnit:voltUnit];
 
             [voltageData addObject:@(value)];
