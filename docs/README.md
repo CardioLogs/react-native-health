@@ -84,3 +84,6 @@
 #### Workout Methods
   * [getWorkout](getWorkout.md)
   * [saveWorkout](saveWorkout.md)
+
+#### Electrocardiogram Methods
+  * [getECGSamples](docs/getECGSamples.md)

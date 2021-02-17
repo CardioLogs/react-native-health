@@ -211,6 +211,9 @@ they are splitted in the following categories
   * [getSamples](docs/getSamples.md)
   * [saveWorkout](/docs/saveWorkout.md)
 
+#### Electrocardiogram Methods
+  * [getECGSamples](docs/getEcgSamples.md)
+
 ## Additional Information
 
 ### Permissions
