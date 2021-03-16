@@ -303,9 +303,10 @@ declare module 'react-native-health' {
     uuid: string
     startDate: string
     averageHr: number
-    classification: string
+    classification: ECGClassification
     voltage: string[]
     frequency: number
+    symptomsStatus: ECGSymptomsStatus
   }
 
   export interface HealthUnitOptions {
@@ -531,7 +532,22 @@ declare module 'react-native-health' {
     ElectroCardiogram = 'ElectroCardiogram',
   }
 
-  const appleHealthKit: AppleHealthKit;
+  export enum ECGSymptomsStatus {
+    None = 'None',
+    Present = 'Present',
+    NotSet = 'NotSet',
+  }
 
-  export default appleHealthKit;
+  export enum ECGClassification {
+    SinusRhythm = 'SinusRhythm',
+    AtrialFibrillation = 'AtrialFibrillation',
+    InconclusiveLowHeartRate = 'InconclusiveLowHeartRate',
+    InconclusiveHighHeartRate = 'InconclusiveHighHeartRate',
+    InconclusiveOther = 'InconclusiveOther',
+    Unrecognized = 'Unrecognized',
+  }
+
+  const appleHealthKit: AppleHealthKit
+
+  export default appleHealthKit
 }

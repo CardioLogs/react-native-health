@@ -30,6 +30,7 @@ Example:
   classification: String // [RCTAppleHealthKit ecgClassificationToString:HKElectrocardiogram.classification]
   voltage: string[] // [NSMutableArray]
   frequency: number // [[HKElectrocardiogram frequency] doubleValueForUnit:[HKUnit hertzUnit]]
+  symptomsStatus: String // [RCTAppleHealthKit ecgSymptomsStatusToString:HKElectrocardiogram.symptomsStatus]
 }
 ```
 
@@ -40,3 +41,11 @@ Possible values for classification:
 - "InconclusiveHighHeartRate" - `[HKElectrocardiogramClassificationInconclusiveHighHeartRate]`
 - "InconclusiveOther" - `[HKElectrocardiogramClassificationInconclusiveOther]`
 - "Unrecognized" - `[HKElectrocardiogramClassificationUnrecognized]` (used as a default value)
+
+
+Possible values for symptomsStatus:
+- "Present" - `[HKElectrocardiogramSymptomsStatusPresent
+]`, The user added a symptom when they recorded the ECG.
+- "None" - `[HKElectrocardiogramSymptomsStatusNone
+]`, The user didn’t enter a symptom when they recorded the ECG.
+- "NotSet" - `[HKElectrocardiogramSymptomsStatusNotSet]` Same as None but user is not responsible of it

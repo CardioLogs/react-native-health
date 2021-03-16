@@ -180,6 +180,7 @@
                         double avgHrValue = [avgHRQty doubleValueForUnit:unit];
                         NSString *startDateString = [RCTAppleHealthKit buildISO8601StringFromDate:sample.startDate];
                         NSString *classification = [RCTAppleHealthKit ecgClassificationToString:sample.classification];
+                        NSString *symptomsStatus = [RCTAppleHealthKit ecgSymptomsStatusToString:sample.symptomsStatus];
                         HKQuantity *frequency = sample.samplingFrequency;
                         double frequencyValue = [frequency doubleValueForUnit:[HKUnit hertzUnit]];
                         
@@ -197,7 +198,7 @@
                             if (!error) {
                                 voltageData = voltage;
                             } else {
-                                NSLog(@"error reasing ecg voltage: %@", voltErr);
+                                NSLog(@"error reading ecg voltage: %@", voltErr);
                             }
 
                             // Leave dispatch group
@@ -213,7 +214,8 @@
                             @"averageHr" : @(avgHrValue),
                             @"classification" : classification,
                             @"voltage" : voltageData,
-                            @"frequency" : @(frequencyValue)
+                            @"frequency" : @(frequencyValue),
+                            @"symptomsStatus": symptomsStatus
                         };
                         
                         [data addObject:elem];

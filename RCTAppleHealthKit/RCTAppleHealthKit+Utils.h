@@ -36,5 +36,5 @@
 + (NSMutableArray *)reverseNSMutableArray:(NSMutableArray *)array;
 + (NSString*) stringForHKWorkoutActivityType:(int) enumValue;
 + (NSString *)ecgClassificationToString:(HKElectrocardiogramClassification)sampleClassification;
-
++ (NSString *)ecgSymptomsStatusToString:(HKElectrocardiogramSymptomsStatus)sampleSymptomsStatus;
 @end

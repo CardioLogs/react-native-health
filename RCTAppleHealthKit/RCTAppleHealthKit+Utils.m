@@ -520,4 +520,17 @@
     }
 }
 
+ + (NSString *)ecgSymptomsStatusToString:(HKElectrocardiogramSymptomsStatus)sampleSymptomsStatus
+ {
+     switch(sampleSymptomsStatus) {
+         case HKElectrocardiogramSymptomsStatusNone:
+             return @"None";
+         case HKElectrocardiogramSymptomsStatusPresent:
+             return @"Present";
+         case HKElectrocardiogramSymptomsStatusNotSet:
+         default:
+             return @"NotSet";
+     }
+ }
+
 @end
