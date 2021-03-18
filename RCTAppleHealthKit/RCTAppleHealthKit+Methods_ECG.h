@@ -1,5 +1,5 @@
 //
-//  RCTAppleHealthKit+Methods_Vitals.h
+//  RCTAppleHealthKit+Methods_ECG.h
 //  RCTAppleHealthKit
 //
 //  This source code is licensed under the MIT-style license found in the
@@ -12,5 +12,12 @@
 
 // API
 - (void)ecg_getECGSamples:(NSDictionary *)input callback:(RCTResponseSenderBlock)callback;
+- (void)ecg_ecgHasFatigue:(NSDictionary *)input callback:(RCTResponseSenderBlock)callback;
+
+// Helpers
+- (void)getSampleByUUID:(NSString *)uuidString completion:(void (^)(HKElectrocardiogram *, NSError *))completion;
+- (void)countAssociatedSymptoms:(HKCategoryType *)type
+                        ecgUUID:(NSString *)ecgUUID
+                     completion:(void (^)(NSUInteger *, NSError *))completion;
 
 @end

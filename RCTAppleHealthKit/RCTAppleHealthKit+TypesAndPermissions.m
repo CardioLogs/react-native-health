@@ -117,6 +117,11 @@
     if ([@"ElectroCardiogram" isEqualToString: key]) {
         return [HKObjectType electrocardiogramType];
     }
+    
+    // Symptoms identifiers
+    if ([@"Fatigue" isEqualToString: key]) {
+        return [HKObjectType categoryTypeForIdentifier:HKCategoryTypeIdentifierFatigue];
+    }
 
     return nil;
 }

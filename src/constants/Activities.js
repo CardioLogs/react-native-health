@@ -76,4 +76,4 @@ export const Activities = {
   TaiChi: 'TaiChi',
   MixedCardio: 'MixedCardio',
   HandCycling: 'HandCycling',
-}
+};

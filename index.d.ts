@@ -281,6 +281,11 @@ declare module 'react-native-health' {
       callback: (err: string, results: EcgValue[]) => void,
     ): void
 
+    ecgHasFatigue(
+      options: { uuid: string },
+      callback: (err: string, results: number) => void,
+    ): void
+
     setObserver(options: HealthObserverOptions): void
 
     Constants: Constants
@@ -482,6 +487,7 @@ declare module 'react-native-health' {
     Weight = 'Weight',
     Workout = 'Workout',
     ElectroCardiogram = 'ElectroCardiogram',
+    Fatigue = 'Fatigue',
   }
 
   export enum HealthUnit {
@@ -516,8 +522,8 @@ declare module 'react-native-health' {
 
   export interface HealthStatusResult {
     permissions: {
-      read: HealthStatusCode[],
-      write: HealthStatusCode[],
+      read: HealthStatusCode[]
+      write: HealthStatusCode[]
     }
   }
 
@@ -545,6 +551,10 @@ declare module 'react-native-health' {
     InconclusiveHighHeartRate = 'InconclusiveHighHeartRate',
     InconclusiveOther = 'InconclusiveOther',
     Unrecognized = 'Unrecognized',
+  }
+
+  export enum SymptomsIdentifiers {
+    Fatigue = 'Fatigue',
   }
 
   const appleHealthKit: AppleHealthKit

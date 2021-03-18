@@ -74,4 +74,6 @@ export const Permissions = {
   Weight: 'Weight',
   Workout: 'Workout',
   ElectroCardiogram: 'ElectroCardiogram',
-};
+  // Symptoms permissions
+  Fatigue: 'Fatigue',
+}
