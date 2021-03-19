@@ -326,11 +326,10 @@ RCT_EXPORT_METHOD(getECGSamples: (NSDictionary *)input callback:(RCTResponseSend
     [self ecg_getECGSamples:input callback:callback];
 }
 
-RCT_EXPORT_METHOD(ecgHasSymptom: (NSDictionary *)input callback:(RCTResponseSenderBlock)callback)
+RCT_EXPORT_METHOD(getEcgSymptoms: (NSDictionary *)input callback:(RCTResponseSenderBlock)callback)
 {
-    [self ecg_ecgHasSymptom:input callback:callback];
+    [self ecg_getEcgSymptoms:input callback:callback];
 }
-
 
 - (void)isHealthKitAvailable:(RCTResponseSenderBlock)callback
 {

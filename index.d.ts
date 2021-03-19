@@ -281,9 +281,15 @@ declare module 'react-native-health' {
       callback: (err: string, results: EcgValue[]) => void,
     ): void
 
-    ecgHasSymptom(
-      options: { uuid: string; symptom: keyof typeof SymptomsIdentifiers },
-      callback: (err: string, results: number) => void,
+    getEcgSymptoms(
+      options: {
+        uuid: string
+        symptoms: Array<keyof typeof SymptomsIdentifiers>
+      },
+      callback: (
+        err: string,
+        results: Partial<Record<SymptomsIdentifiers, number>>,
+      ) => void,
     ): void
 
     setObserver(options: HealthObserverOptions): void

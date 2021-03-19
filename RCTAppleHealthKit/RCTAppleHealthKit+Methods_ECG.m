@@ -46,26 +46,48 @@
                   }];
 }
 
-- (void)ecg_ecgHasSymptom:(NSDictionary *)input callback:(RCTResponseSenderBlock)callback
+- (void)ecg_getEcgSymptoms:(NSDictionary *)input callback:(RCTResponseSenderBlock)callback
 {
     NSString *uuidString = [RCTAppleHealthKit stringFromOptions:input key:@"uuid" withDefault:@""];
-    NSString *symptomStr = [RCTAppleHealthKit stringFromOptions:input key:@"symptom" withDefault:@""];
-    HKSampleType *type = [RCTAppleHealthKit symptomStrToType:symptomStr];
+    NSArray *symptoms = [input objectForKey:@"symptoms"];
+    __block int len = (int)[symptoms count];
     
-    if (type == nil) {
-        NSLog(@"Symptom type not recognized or not supported: %@", symptomStr);
-        callback(@[RCTMakeError(@"Symptom type not recognized or not supported", nil, nil)]);
-        return;
-    }
-    
-    [self countAssociatedSymptoms:type ecgUUID:uuidString completion:^(NSUInteger *count, NSError *error) {
-        if (error != nil) {
-          NSLog(@"Error getting symptom samples: %@", error);
-          callback(@[RCTMakeError(@"Error getting sylptom samples", nil, nil)]);
-          return;
+    [self getSampleByUUID:uuidString completion:^(HKElectrocardiogram *ecgSample, NSError *ecgSampleError) {
+        if (ecgSample == nil) {
+            callback(@[RCTMakeError(@"Error getting ecg sample", nil, nil)]);
+            return;
         }
-        int countAsInteger = (int)count;
-        callback(@[[NSNull null], @(countAsInteger)]);
+
+        NSPredicate *predicate = [HKQuery predicateForObjectsAssociatedWithElectrocardiogram:ecgSample];
+        NSMutableDictionary *data = [NSMutableDictionary dictionaryWithCapacity:1];
+        
+        for (NSString *symptom in symptoms) {
+            HKSampleType *type = [RCTAppleHealthKit symptomStrToType:symptom];
+
+            HKSampleQuery *symptomsQuery =
+                [[HKSampleQuery alloc]
+                 initWithSampleType:type
+                 predicate:predicate
+                 limit:HKObjectQueryNoLimit
+                 sortDescriptors:nil
+                 resultsHandler:^(HKSampleQuery *query, NSArray *results, NSError *error) {
+                    if (error == nil) {
+                        int countAsInteger = (int)[results count];
+
+                        data[symptom] = @(countAsInteger);
+                    }
+                    
+                    len--;
+
+                    // Finish reading
+                    if (len == 0) {
+                        callback(@[[NSNull null], data]);
+                        return;
+                    }
+                }];
+            
+            [self.healthStore executeQuery:symptomsQuery];
+        }
     }];
 }
 
@@ -92,37 +114,6 @@
         }];
     
     [self.healthStore executeQuery:query];
-}
-
-- (void)countAssociatedSymptoms:(HKCategoryType *)type
-                        ecgUUID:(NSString *)ecgUUID
-                     completion:(void (^)(NSUInteger *, NSError *))completion
-{
-    [self getSampleByUUID:ecgUUID completion:^(HKElectrocardiogram *ecgSample, NSError *ecgSampleError) {
-        if (ecgSample == nil) {
-            completion(0, nil);
-        }
-
-        NSPredicate *predicate = [HKQuery predicateForObjectsAssociatedWithElectrocardiogram:ecgSample];
-
-        HKSampleQuery *symptomsQuery =
-            [[HKSampleQuery alloc]
-             initWithSampleType:type
-             predicate:predicate
-             limit:HKObjectQueryNoLimit
-             sortDescriptors:nil
-             resultsHandler:^(HKSampleQuery *query, NSArray *results, NSError *error) {
-                if (error != nil) {
-                    NSLog(@"Error occurred getting ECG sample by UUID %@", error);
-                    completion(nil, error);
-                    return;
-                }
-                
-                completion([results count], nil);
-            }];
-        
-        [self.healthStore executeQuery:symptomsQuery];
-    }];
 }
 
 @end

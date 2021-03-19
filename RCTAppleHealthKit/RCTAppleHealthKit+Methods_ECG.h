@@ -12,12 +12,9 @@
 
 // API
 - (void)ecg_getECGSamples:(NSDictionary *)input callback:(RCTResponseSenderBlock)callback;
-- (void)ecg_ecgHasSymptom:(NSDictionary *)input callback:(RCTResponseSenderBlock)callback;
+- (void)ecg_getEcgSymptoms:(NSDictionary *)input callback:(RCTResponseSenderBlock)callback;
 
 // Helpers
 - (void)getSampleByUUID:(NSString *)uuidString completion:(void (^)(HKElectrocardiogram *, NSError *))completion;
-- (void)countAssociatedSymptoms:(HKCategoryType *)type
-                        ecgUUID:(NSString *)ecgUUID
-                     completion:(void (^)(NSUInteger *, NSError *))completion;
 
 @end
