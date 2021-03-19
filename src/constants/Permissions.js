@@ -76,4 +76,11 @@ export const Permissions = {
   ElectroCardiogram: 'ElectroCardiogram',
   // Symptoms permissions
   Fatigue: 'Fatigue',
-}
+  Headache: 'Headache',
+  Fainting: 'Fainting',
+  Dizziness: 'Dizziness',
+  ShortnessOfBreath: 'ShortnessOfBreath',
+  ChestTightnessOrPain: 'ChestTightnessOrPain',
+  RapidPoundingOrFlutteringHeartbeat: 'RapidPoundingOrFlutteringHeartbeat',
+  SkippedHeartbeat: 'SkippedHeartbeat',
+};

@@ -121,6 +121,20 @@
     // Symptoms identifiers
     if ([@"Fatigue" isEqualToString: key]) {
         return [HKObjectType categoryTypeForIdentifier:HKCategoryTypeIdentifierFatigue];
+    } else if ([@"Headache" isEqualToString: key]) {
+        return [HKObjectType categoryTypeForIdentifier:HKCategoryTypeIdentifierHeadache];
+    } else if ([@"Fainting" isEqualToString: key]) {
+        return [HKObjectType categoryTypeForIdentifier:HKCategoryTypeIdentifierFainting];
+    } else if ([@"Dizziness" isEqualToString: key]) {
+        return [HKObjectType categoryTypeForIdentifier:HKCategoryTypeIdentifierDizziness];
+    } else if ([@"ShortnessOfBreath" isEqualToString: key]) {
+        return [HKObjectType categoryTypeForIdentifier:HKCategoryTypeIdentifierShortnessOfBreath];
+    } else if ([@"ChestTightnessOrPain" isEqualToString: key]) {
+        return [HKObjectType categoryTypeForIdentifier:HKCategoryTypeIdentifierChestTightnessOrPain];
+    } else if ([@"RapidPoundingOrFlutteringHeartbeat" isEqualToString: key]) {
+        return [HKObjectType categoryTypeForIdentifier:HKCategoryTypeIdentifierRapidPoundingOrFlutteringHeartbeat];
+    } else if ([@"SkippedHeartbeat" isEqualToString: key]) {
+        return [HKObjectType categoryTypeForIdentifier:HKCategoryTypeIdentifierSkippedHeartbeat];
     }
 
     return nil;

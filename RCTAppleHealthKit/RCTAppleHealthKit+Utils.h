@@ -37,4 +37,5 @@
 + (NSString*) stringForHKWorkoutActivityType:(int) enumValue;
 + (NSString *)ecgClassificationToString:(HKElectrocardiogramClassification)sampleClassification;
 + (NSString *)ecgSymptomsStatusToString:(HKElectrocardiogramSymptomsStatus)sampleSymptomsStatus;
++ (HKSampleType *)symptomStrToType:(NSString *)key;
 @end

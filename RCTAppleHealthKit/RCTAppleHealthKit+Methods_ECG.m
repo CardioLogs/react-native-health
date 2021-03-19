@@ -46,15 +46,22 @@
                   }];
 }
 
-- (void)ecg_ecgHasFatigue:(NSDictionary *)input callback:(RCTResponseSenderBlock)callback
+- (void)ecg_ecgHasSymptom:(NSDictionary *)input callback:(RCTResponseSenderBlock)callback
 {
     NSString *uuidString = [RCTAppleHealthKit stringFromOptions:input key:@"uuid" withDefault:@""];
-    HKSampleType *fatigue = [HKCategoryType categoryTypeForIdentifier:HKCategoryTypeIdentifierFatigue];
+    NSString *symptomStr = [RCTAppleHealthKit stringFromOptions:input key:@"symptom" withDefault:@""];
+    HKSampleType *type = [RCTAppleHealthKit symptomStrToType:symptomStr];
     
-    [self countAssociatedSymptoms:fatigue ecgUUID:uuidString completion:^(NSUInteger *count, NSError *error) {
+    if (type == nil) {
+        NSLog(@"Symptom type not recognized or not supported: %@", symptomStr);
+        callback(@[RCTMakeError(@"Symptom type not recognized or not supported", nil, nil)]);
+        return;
+    }
+    
+    [self countAssociatedSymptoms:type ecgUUID:uuidString completion:^(NSUInteger *count, NSError *error) {
         if (error != nil) {
-          NSLog(@"Error getting fatigue samples: %@", error);
-          callback(@[RCTMakeError(@"Error getting fatigue samples", nil, nil)]);
+          NSLog(@"Error getting symptom samples: %@", error);
+          callback(@[RCTMakeError(@"Error getting sylptom samples", nil, nil)]);
           return;
         }
         int countAsInteger = (int)count;

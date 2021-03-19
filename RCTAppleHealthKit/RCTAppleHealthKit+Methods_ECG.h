@@ -12,7 +12,7 @@
 
 // API
 - (void)ecg_getECGSamples:(NSDictionary *)input callback:(RCTResponseSenderBlock)callback;
-- (void)ecg_ecgHasFatigue:(NSDictionary *)input callback:(RCTResponseSenderBlock)callback;
+- (void)ecg_ecgHasSymptom:(NSDictionary *)input callback:(RCTResponseSenderBlock)callback;
 
 // Helpers
 - (void)getSampleByUUID:(NSString *)uuidString completion:(void (^)(HKElectrocardiogram *, NSError *))completion;

@@ -281,8 +281,8 @@ declare module 'react-native-health' {
       callback: (err: string, results: EcgValue[]) => void,
     ): void
 
-    ecgHasFatigue(
-      options: { uuid: string },
+    ecgHasSymptom(
+      options: { uuid: string; symptom: keyof typeof SymptomsIdentifiers },
       callback: (err: string, results: number) => void,
     ): void
 
@@ -488,6 +488,13 @@ declare module 'react-native-health' {
     Workout = 'Workout',
     ElectroCardiogram = 'ElectroCardiogram',
     Fatigue = 'Fatigue',
+    Headache = 'Headache',
+    Fainting = 'Fainting',
+    Dizziness = 'Dizziness',
+    ShortnessOfBreath = 'ShortnessOfBreath',
+    ChestTightnessOrPain = 'ChestTightnessOrPain',
+    RapidPoundingOrFlutteringHeartbeat = 'RapidPoundingOrFlutteringHeartbeat',
+    SkippedHeartbeat = 'SkippedHeartbeat',
   }
 
   export enum HealthUnit {
@@ -555,9 +562,16 @@ declare module 'react-native-health' {
 
   export enum SymptomsIdentifiers {
     Fatigue = 'Fatigue',
+    Headache = 'Headache',
+    Fainting = 'Fainting',
+    Dizziness = 'Dizziness',
+    ShortnessOfBreath = 'ShortnessOfBreath',
+    ChestTightnessOrPain = 'ChestTightnessOrPain',
+    RapidPoundingOrFlutteringHeartbeat = 'RapidPoundingOrFlutteringHeartbeat',
+    SkippedHeartbeat = 'SkippedHeartbeat',
   }
 
-  const appleHealthKit: AppleHealthKit
+  const appleHealthKit: AppleHealthKit;
 
-  export default appleHealthKit
+  export default appleHealthKit;
 }
